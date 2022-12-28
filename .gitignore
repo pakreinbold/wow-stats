@@ -1,0 +1,5 @@
+**/__pycache__
+**/secrets.json
+**/*.csv
+**/playground.ipynb
+**/*.html

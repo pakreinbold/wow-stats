@@ -120,7 +120,7 @@ def grade(score: float) -> str:
 #########################
 #       Plotting
 #########################
-def plot_rating_hist(all_ratings: pd.DataFrame, save: bool = False):
+def plot_rating_hist(all_ratings: pd.DataFrame, save: bool = False, save_format: str = 'html'):
     fig = px.histogram(
         all_ratings,
         x='rating',
@@ -136,13 +136,16 @@ def plot_rating_hist(all_ratings: pd.DataFrame, save: bool = False):
     fig.update_layout(width=1500, height=600)
 
     if save:
-        pio.write_html(fig, 'state_of_the_ladder.html')
+        if save_format == 'html':
+            pio.write_html(fig, f'state_of_the_ladder.{save_format}')
+        else:
+            pio.write_image(fig, f"state_of_the_ladder.{save_format}")
     fig.show()
 
 
 def plot_performance_scatter3(
     performance: pd.DataFrame, x: str = '0.5', y: str = '0.95', z: str = '0.99',
-    color: str = 'class-spec', save: bool = False
+    color: str = 'class-spec', save: bool = False, save_format: str = 'html'
 ):
     fig = px.scatter_3d(
         performance.reset_index(),
@@ -159,11 +162,14 @@ def plot_performance_scatter3(
         )
     )
     if save:
-        pio.write_html(fig, 'performance_scatter3.html')
+        if save_format == 'html':
+            pio.write_html(fig, f'performance_scatter3.{save_format}')
+        else:
+            pio.write_image(fig, f"performance_scatter3.{save_format}")
     fig.show()
 
 
-def plot_tier_list(performance: pd.DataFrame, save: bool = False):
+def plot_tier_list(performance: pd.DataFrame, save: bool = False, save_format: str = 'html'):
     fig = px.bar(
         performance.reset_index().sort_values('score'),
         y='tier', color='class-spec', color_discrete_map=spec_colors,
@@ -174,7 +180,10 @@ def plot_tier_list(performance: pd.DataFrame, save: bool = False):
         showlegend=False,
     )
     if save:
-        pio.write_html(fig, 'quantile_tier_list.html')
+        if save_format == 'html':
+            pio.write_html(fig, f'quantile_tier_list.{save_format}')
+        else:
+            pio.write_image(fig, f"quantile_tier_list.{save_format}")
     fig.show()
 
 
